@@ -2,11 +2,46 @@
   <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Menu</mat-toolbar>
+
     <mat-nav-list>
-      <a mat-list-item href="#">Link 1</a>
-      <a mat-list-item href="#">Link 2</a>
-      <a mat-list-item href="#">Link 3</a>
+      <span *ngFor="let item of menu">
+        <span *ngIf="item.children && item.children.length > 0">
+          <mat-accordion>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <!-- Cabeceras del submenu -->
+                  <div fxLayout="row" fxLayoutAlign="space-between center">
+                    <mat-icon>{{item.iconName}}</mat-icon>
+                    {{item.displayName}}
+                  </div>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <span *ngFor="let child of item.children">
+                <mat-list-item routerLink="{{child.route}}">
+                  <!-- Entradas de cada submenú  -->
+                  <div fxLayout="row" fxLayoutAlign="space-between center">
+                    <mat-icon>{{child.iconName}}</mat-icon>
+                    {{child.displayName}}
+                  </div>
+                </mat-list-item>
+              </span>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </span>
+        <span *ngIf="!item.children || item.children.length === 0">
+          <mat-list-item routerLink="[item.route]">
+            <!-- Entradas principales -->
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+              <mat-icon>{{item.iconName}}</mat-icon>
+              {{item.displayName}}
+            </div>
+          </mat-list-item>
+        </span>
+      </span>
     </mat-nav-list>
+
+
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary" class="mat-elevation-z5">

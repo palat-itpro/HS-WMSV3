@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "hs-lae-stkctl": {
+      "hosting": {
+        "wmsv3": [
+          "hs-lae-stkctl"
+        ]
+      }
+    }
+  }
+}
