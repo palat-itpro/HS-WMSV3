@@ -1,0 +1,12 @@
+table {
+    width: 100%;
+}
+
+.colBox {
+    justify-content: left;
+    height: 2%;
+}
+
+td {
+    vertical-align: top;
+}

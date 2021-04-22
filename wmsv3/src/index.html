@@ -1,19 +1,22 @@
 <!doctype html>
-<html lang="en">
-
+<html>
 <head>
   <meta charset="utf-8">
-  <title>Wmsv3</title>
+  <title>Morpheus</title>
   <base href="/">
+
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <link id="theme-css" rel="stylesheet" type="text/css" href="assets/theme/theme-green.css">
+  <link id="layout-css" rel="stylesheet" type="text/css" href="assets/layout/css/layout-green.css">
 </head>
-
-<body class="mat-typography">
-  <app-root></app-root>
-</body>
-
+    <body class="main-body">
+        <app-root>
+            <div class="splash-screen">
+                <div class="splash-loader"></div>
+                <img class="splash-logo" src="assets/layout/images/morpheus-logo-white.svg"/>
+            </div>
+        </app-root>
+    </body>
 </html>

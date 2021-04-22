@@ -1,0 +1,22 @@
+<p-table [value]="dataSource">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Shipment</th>
+            <th>DFT</th>
+            <th>UPDATE</th>
+            <th>CONT PAX</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-v>
+        <tr>
+            <td><i class="pi pi-folder-open"> &nbsp; </i>{{v.shipmentNumber}}</td>
+            <td>{{v.dft}}</td>
+            <td>{{v.update}}</td>
+            <div style="padding: 10px" *ngFor="let cont of v.containerList">
+                <td>
+                    {{cont.containerNumber}}
+                </td>
+            </div>
+        </tr>
+    </ng-template>
+</p-table>
