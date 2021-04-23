@@ -130,7 +130,7 @@
             <a href="#" (click)="app.onTopbarItemClick($event,profile)">
                 <div class="profile-image">
                     <!-- <img src="assets/layout/images/profile-image.png"> -->
-                    <img *ngIf="userInfo.photoURL != null || undefined" [src]="userInfo.photoURL">
+                    <img *ngIf="userInfo?.userObj != null || undefined" [src]="userInfo.userObj.photoURL">
                 </div>
                 <span class="profile-text">Profile</span>
             </a>

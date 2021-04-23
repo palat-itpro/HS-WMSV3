@@ -1,12 +1,13 @@
 import { AuthService } from "./../services/auth.service";
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
+import { AngularFirestore } from "@angular/fire/firestore";
 
 @Component({
     selector: "app-login",
     templateUrl: "./app.login.component.html",
 })
-export class AppLoginComponent {
-    constructor(private Authserv: AuthService) {}
+export class AppLoginComponent implements OnInit {
+    constructor(private Authserv: AuthService,private afs: AngularFirestore) {}
     login() {
         this.Authserv.loginServ();
     }
@@ -14,4 +15,7 @@ export class AppLoginComponent {
     logOut() {
         this.Authserv.logout();
     }
+
+    ngOnInit(){}
+
 }
