@@ -11,6 +11,7 @@ import {
 // import { shipmentData as shipmentDatamModel } from './demo';
 
 export interface shipmentmodel {
+    [x: string]: any;
     date: any;
     addedBy: any;
     agent: any;
@@ -87,7 +88,6 @@ export class ShipmenttableComponent implements OnInit {
             .valueChanges()
             .subscribe((res: any) => {
                 this.dataSource = res;
-                console.log(this.dataSource[0].containerList);
             });
     }
 
