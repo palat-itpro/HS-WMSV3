@@ -1,14 +1,9 @@
 import { map } from "rxjs/operators";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { shipmentData } from "./demo";
-import {
-    AfterViewInit,
-    Component,
-    OnInit,
-    PACKAGE_ROOT_URL,
-    ViewChild,
-} from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 // import { shipmentData as shipmentDatamModel } from './demo';
+import * as moment from "moment";
 
 export interface shipmentmodel {
     [x: string]: any;
@@ -59,7 +54,34 @@ export class ShipmenttableComponent implements OnInit {
         DEUGRO: 45,
     };
 
-    getDft() {}
+    getDft(discharge: any, agent: string) {
+        // this.dftData[`${agent}`]
+        let today = moment();
+        let disc = discharge.toMillis();
+        let agentDft = moment(disc)
+            .add(this.dftData[`${agent}`], "days")
+            .toString();
+        let safeDft = moment(disc)
+            .add(this.dftData[`${agent}`], "days")
+            .subtract(5, "days")
+            .toString();
+
+        let dftdate = moment(agentDft);
+        let todaysdate = moment();
+        let actualDftLeft = dftdate.diff(todaysdate, "days");
+
+        let safedftdate = moment(safeDft);
+        let safeDftLeft = safedftdate.diff(todaysdate, "days");
+
+        // console.log(actualDftDays, safeDftDays);
+        let dftData = {
+            actualDftDate: agentDft,
+            safeDft,
+            actualDftLeft,
+            safeDftLeft,
+        };
+        return dftData;
+    }
 
     skuCode: any[] = [];
     skuQty: any[] = [];

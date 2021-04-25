@@ -2,7 +2,9 @@
     <ng-template pTemplate="header">
         <tr>
             <th>Shipment</th>
-            <th>DFT</th>
+            <th>DISCHARGE</th>
+            <th>ACTUAL DFT</th>
+            <th>DFT (SAFE MARGIN)</th>
             <th>UPDATE</th>
             <th>CONTAINER</th>
         </tr>
@@ -42,10 +44,33 @@
         </table>
         </p-fieldset>
         </td>
-        <td>{{v.dft}}
-            <p-progressBar color="primary" [value]="v.dft"></p-progressBar>
+        <td>
+            <p-panel header="DISCHARGE DATE/TIME">
+                {{v.discharge.toMillis() | date: 'MMM d, y, h:mm:ss a'}}
+            </p-panel>
+
+        <td>
+            <p-panel [header]="getDft(v.discharge,v.agent)['actualDftLeft'] + ' DAYS'">
+                <P>
+                    {{getDft(v.discharge,v.agent)["actualDftDate"]}}
+                </P>
+            </p-panel>
         </td>
-        <td>{{v.update}}</td>
+        <td>
+            <p-panel [header]="getDft(v.discharge,v.agent)['safeDftLeft'] + ' DAYS'">
+                <p>
+                    {{getDft(v.discharge,v.agent)["safeDft"]}} &nbsp;
+                </p>
+            </p-panel>
+        </td>
+        <td>
+            <p-panel [header]="'Update by ' + v.addedBy">
+                <p>
+                    {{v.update.toMillis() | date: 'MMM d, y'}}
+                </p>
+            </p-panel>
+
+        </td>
         <td>
             <p-accordion>
                 <p-accordionTab header="Packing List">
@@ -60,10 +85,8 @@
                                         </tr>
                                         <tr *ngFor="let item of cont.sku">
 
-
                                             <td>{{item.skuCode}}</td>
                                             <td>{{item.qty}}</td>
-
 
                                         </tr>
                                     </table>

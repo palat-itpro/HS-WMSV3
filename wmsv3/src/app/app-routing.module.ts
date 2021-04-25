@@ -1,3 +1,4 @@
+import { AddshipmentComponent } from "./pages/import/addshipment/addshipment.component";
 import { ShipmenttableComponent } from "./pages/import/shipmenttable/shipmenttable.component";
 import { RouterModule } from "@angular/router";
 import { NgModule } from "@angular/core";
@@ -55,6 +56,10 @@ import { AppHelpComponent } from "./pages/app.help.component";
                         {
                             path: "import/shipment",
                             component: ShipmenttableComponent,
+                        },
+                        {
+                            path: "import/addshipment",
+                            component: AddshipmentComponent,
                         },
                         //
                         {

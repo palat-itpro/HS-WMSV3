@@ -1,0 +1,23 @@
+<div class="p-col-6">
+    <p-card>
+
+        <form [formGroup]="shipmentForm">
+            <!-- Value : {{shipmentForm.value | json}} <br> -->
+            <h5>Add shipment form</h5>
+            <div class="p-formgroup-inline">
+                <div class="p-field">
+                    <label class="p-sr-only" for="firstname5"><span class="p-inputgroup-addon"></span></label>
+                    <p-dropdown [options]="agent" [(ngModel)]="selectedAgent" optionLabel="name" optionValue="name"
+                        optionDisabled="inactive" formControlName="agent">
+                    </p-dropdown>
+                </div>
+                <div class="p-field">
+                    <p-calendar [(ngModel)]="dischargeTime" showTime="true" dateFormat="dd.mm.yy" hourFormat="24"
+                        formControlName="discharge" [touchUI]="true" placeholder="Discharge date/time">
+                    </p-calendar>
+                </div>
+            </div>
+        </form>
+
+    </p-card>
+</div>

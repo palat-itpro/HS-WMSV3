@@ -33,7 +33,8 @@ export class AuthService {
                             online: true,
                         };
                         this.userDBref.doc(user.uid).set({ userObj });
-                        localStorage.setItem("uid",userObj.uid)
+                        localStorage.setItem("uid", userObj.uid);
+                        localStorage.setItem("userName", userObj.displayName);
                     }
                 });
 
@@ -50,14 +51,13 @@ export class AuthService {
         this.router.navigate([""]);
     }
 
-    user: any
+    user: any;
     get isLoggedIn(): boolean {
-        if(localStorage.getItem("userData")){
-             this.user = JSON.parse(localStorage.getItem("userData"));
+        if (localStorage.getItem("userData")) {
+            this.user = JSON.parse(localStorage.getItem("userData"));
         }
         return this.user !== null && this.user.emailVerified !== false
             ? true
             : false;
     }
-
 }

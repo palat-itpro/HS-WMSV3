@@ -1,7 +1,7 @@
 import { ShipmenttableComponent } from "./pages/import/shipmenttable/shipmenttable.component";
 import { environment } from "./../environments/environment.prod";
 import { NgModule } from "@angular/core";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -9,6 +9,7 @@ import { HashLocationStrategy, LocationStrategy } from "@angular/common";
 import { AppRoutingModule } from "./app-routing.module";
 
 import { AccordionModule } from "primeng/accordion";
+import { ChipsModule } from "primeng/chips";
 import { AutoCompleteModule } from "primeng/autocomplete";
 import { BreadcrumbModule } from "primeng/breadcrumb";
 import { ButtonModule } from "primeng/button";
@@ -17,7 +18,6 @@ import { CardModule } from "primeng/card";
 import { CarouselModule } from "primeng/carousel";
 import { ChartModule } from "primeng/chart";
 import { CheckboxModule } from "primeng/checkbox";
-import { ChipsModule } from "primeng/chips";
 import { CodeHighlighterModule } from "primeng/codehighlighter";
 import { ConfirmDialogModule } from "primeng/confirmdialog";
 import { ColorPickerModule } from "primeng/colorpicker";
@@ -137,6 +137,7 @@ import { ProductService } from "./demo/service/productservice";
 import { MenuService } from "./app.menu.service";
 
 import { AngularFireModule } from "@angular/fire";
+import { AddshipmentComponent } from "./pages/import/addshipment/addshipment.component";
 
 @NgModule({
     imports: [
@@ -212,6 +213,7 @@ import { AngularFireModule } from "@angular/fire";
         TreeTableModule,
         VirtualScrollerModule,
         AppCodeModule,
+        ReactiveFormsModule,
         AngularFireModule.initializeApp(environment.firebaseConfig),
     ],
     declarations: [
@@ -261,6 +263,7 @@ import { AngularFireModule } from "@angular/fire";
         AppErrorComponent,
         AppAccessdeniedComponent,
         ShipmenttableComponent,
+        AddshipmentComponent,
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
