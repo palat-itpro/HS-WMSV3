@@ -41,7 +41,7 @@ export class AddshipmentComponent implements OnInit {
             shipmentNumber: [],
             status: ["active"],
             total: [],
-            update: [],
+            update: [this.timestamp],
         });
     }
 
@@ -52,20 +52,23 @@ export class AddshipmentComponent implements OnInit {
     addContainer() {
         const cont = this.fb.group({
             containerNumber: [],
-            sku: this.fb.array([]),
+            sku: this.fb.array([this.addSku()]),
             iskeyCont: [],
         });
         this.containerForm.push(cont);
+        // console.log(this.containerForm.controls)
     }
 
     removeContainer(i: number) {
         this.containerForm.removeAt(i);
     }
 
-    addSku(index: number) {
-        (<FormArray>(
-            (<FormGroup>this.containerForm.controls[index]).controls.contacts
-        )).push(this.skuFormGroup());
+
+    addSku() {
+        return this.fb.group({
+            skuCode: [],
+            qty: [],
+        });
     }
 
     // get skuArray(){

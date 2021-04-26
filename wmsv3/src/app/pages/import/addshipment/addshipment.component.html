@@ -16,7 +16,47 @@
                         formControlName="discharge" [touchUI]="true" placeholder="Discharge date/time">
                     </p-calendar>
                 </div>
+
+                <div class="p-formgroup-inline">
+                    <div class="p-field">
+                        <label class="p-sr-only" for="loadingdate"><span class="p-inputgroup-addon"></span></label>
+                        <p-calendar #loadingdate [(ngModel)]="dischargeTime" showTime="false" dateFormat="dd.mm.yy"
+                            hourFormat="24" formControlName="loadingdate" [touchUI]="true" placeholder="Loading date">
+                        </p-calendar>
+                    </div>
+                </div>
+
             </div>
+
+
+            <div class="p-formgroup-inline">
+                <div class="p-field">
+                    <input type="text" formControlName="shipmentNumber" pInputText placeholder="Shipment Number" />
+                </div>
+            </div>
+
+            <div formArrayName="containerList">
+                <div *ngFor="let cont of containerForm.controls;let i=index" [formGroupName]="i">
+                    <hr>
+                    <div class="p-formgroup-inline">
+                        <div class="p-field">
+                            <input type="text" formControlName="containerNumber" pInputText placeholder="container number" />
+                        </div>
+
+                        <button pButton type="button" icon="pi pi-times" label=" - container " class="p-button-rounded p-button-danger p-button-outlined p-ripple p-button p-component p-button-icon-only" (click)="removeContainer(i)"></button>
+                        <button pButton type="button" icon="pi pi-plus" label=" - container " class="p-button-rounded p-button-danger p-button-outlined p-ripple p-button p-component p-button-icon-only" (click)="addSku(i)"></button>
+
+                        <div class="p-formgroup">
+                            <div class="p-field">
+                                <input type="text" formControlName="skuCode" pInputText placeholder="sku" />
+                                </div>
+                                </div>
+                    </div>
+                  <hr>
+                </div>
+                <button pButton type="button" label=" + container " (click)="addContainer()" ></button>
+            </div>
+
         </form>
 
     </p-card>
