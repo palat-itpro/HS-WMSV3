@@ -138,6 +138,8 @@ import { MenuService } from "./app.menu.service";
 
 import { AngularFireModule } from "@angular/fire";
 import { AddshipmentComponent } from "./pages/import/addshipment/addshipment.component";
+import { UnloadComponent } from "./pages/import/unload/unload.component";
+import { UnloadingComponent } from "./pages/import/unload/unloading/unloading.component";
 
 @NgModule({
     imports: [
@@ -264,6 +266,8 @@ import { AddshipmentComponent } from "./pages/import/addshipment/addshipment.com
         AppAccessdeniedComponent,
         ShipmenttableComponent,
         AddshipmentComponent,
+        UnloadComponent,
+        UnloadingComponent,
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },

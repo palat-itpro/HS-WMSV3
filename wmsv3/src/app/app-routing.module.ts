@@ -1,3 +1,4 @@
+import { UnloadComponent } from "./pages/import/unload/unload.component";
 import { AddshipmentComponent } from "./pages/import/addshipment/addshipment.component";
 import { ShipmenttableComponent } from "./pages/import/shipmenttable/shipmenttable.component";
 import { RouterModule } from "@angular/router";
@@ -58,8 +59,8 @@ import { AppHelpComponent } from "./pages/app.help.component";
                             component: ShipmenttableComponent,
                         },
                         {
-                            path: "import/addshipment",
-                            component: AddshipmentComponent,
+                            path: "import/unload",
+                            component: UnloadComponent,
                         },
                         //
                         {

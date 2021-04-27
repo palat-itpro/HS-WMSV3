@@ -39,6 +39,24 @@ export class AppMenuComponent implements OnInit {
                         routerLink: ["/import/shipment"],
                     },
                     {
+                        label: "Unload",
+                        icon: "pi pi-fw pi-table",
+                        routerLink: ["/import/unload"],
+                    },
+                ],
+            },
+            {
+                label: "Unload",
+                icon: "pi pi-fw pi-list",
+                routerLink: ["dispatch"],
+                badge: 10,
+                items: [
+                    {
+                        label: "Unload",
+                        icon: "pi pi-fw pi-table",
+                        routerLink: ["/import/shipment"],
+                    },
+                    {
                         label: "Shipment table",
                         icon: "pi pi-fw pi-table",
                         routerLink: ["/import/addshipment"],

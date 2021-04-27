@@ -5,10 +5,10 @@ import { Component, OnInit } from "@angular/core";
 // import { shipmentData as shipmentDatamModel } from './demo';
 import * as moment from "moment";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import {ConfirmationService} from 'primeng/api';
-import * as firebase from "firebase"
-import { PrimeNGConfig } from 'primeng/api';
-import {Message} from 'primeng/api';
+import { ConfirmationService } from "primeng/api";
+import * as firebase from "firebase";
+import { PrimeNGConfig } from "primeng/api";
+import { Message } from "primeng/api";
 
 export interface shipmentmodel {
     [x: string]: any;
@@ -39,7 +39,7 @@ export interface shipmentmodel {
     selector: "app-shipmenttable",
     templateUrl: "./shipmenttable.component.html",
     styleUrls: ["./shipmenttable.component.css"],
-    providers: [ConfirmationService]
+    providers: [ConfirmationService],
 })
 export class ShipmenttableComponent implements OnInit {
     dataSource: shipmentmodel;
@@ -48,18 +48,21 @@ export class ShipmenttableComponent implements OnInit {
     displayedColumns = ["SHIPMENT", "CONT"];
     subTableColumns = ["SKU", "QTY", "TON"];
 
-    timeStamp = firebase.default.firestore.FieldValue.serverTimestamp()
+    timeStamp = firebase.default.firestore.FieldValue.serverTimestamp();
 
-    constructor(private afs: AngularFirestore, private fb: FormBuilder,private cf:ConfirmationService,
+    constructor(
+        private afs: AngularFirestore,
+        private fb: FormBuilder,
+        private cf: ConfirmationService,
         private primengConfig: PrimeNGConfig
-        ) {}
+    ) {}
 
     naqiInspection: FormGroup;
     msgs: Message[] = [];
     position: string;
     userName = localStorage.getItem("userName");
 
-    dftData = {
+    public dftData = {
         SWIRE: 35,
         ANL: 60,
         NEW_PAC: 60,
@@ -69,7 +72,7 @@ export class ShipmenttableComponent implements OnInit {
         DEUGRO: 45,
     };
 
-    getDft(discharge: any, agent: string) {
+    public getDft(discharge: any, agent: string) {
         // this.dftData[`${agent}`]
         let today = moment();
         let disc = discharge.toMillis();
@@ -107,8 +110,8 @@ export class ShipmenttableComponent implements OnInit {
         this.primengConfig.ripple = true;
 
         this.naqiInspection = this.fb.group({
-            naqiareleaseDate:[,Validators.required]
-        })
+            naqiareleaseDate: [, Validators.required],
+        });
         // this.afs
         //     .collection("lae_shipment")
         //     .doc(shipmentData.shipmentNumber)
@@ -133,27 +136,49 @@ export class ShipmenttableComponent implements OnInit {
             });
     }
 
-
-    submitNaqia(docId:string,v:any) {
+    submitNaqia(docId: string, v: any, shipment, agent, discharge) {
         this.cf.confirm({
-            message: 'Are you sure that you want to proceed?',
-            header: 'Confirmation',
-            icon: 'pi pi-exclamation-triangle',
+            message: "Are you sure that you want to proceed?",
+            header: "Confirmation",
+            icon: "pi pi-exclamation-triangle",
             accept: () => {
-                this.msgs = [{severity:'info', summary:'Confirmed', detail:'You have accepted'}];
-                // this.afs.collection("lae_shipment").doc(docId).update({
-                //     releaseUpdateBy:this.userName,
-                //     naqiaRelease: true,
-                //     naqiaReleaseDate:this.timeStamp
-                // })
-                v.forEach((element:any) => {
-                    console.log(element)
+                this.msgs = [
+                    {
+                        severity: "info",
+                        summary: "Confirmed",
+                        detail: "You have accepted",
+                    },
+                ];
+                this.afs.collection("lae_shipment").doc(docId).update({
+                    releaseUpdateBy: this.userName,
+                    naqiaRelease: true,
+                    naqiaReleaseDate: this.timeStamp,
+                });
+                v.forEach((v: any) => {
+                    // console.log(v.containerNumber);
+                    this.fireWrite(v.containerNumber.replace(" ", ""), {
+                        shipmentNumber: shipment,
+                        containerNumber: v.containerNumber.replace(" ", ""),
+                        sku: v.sku,
+                        discharge: discharge,
+                        agent: agent,
+                        status: "ready to unload",
+                    });
                 });
             },
             reject: () => {
-                this.msgs = [{severity:'info', summary:'Rejected', detail:'You have rejected'}];
-            }
+                this.msgs = [
+                    {
+                        severity: "info",
+                        summary: "Rejected",
+                        detail: "You have rejected",
+                    },
+                ];
+            },
         });
     }
 
+    fireWrite(docid: string, data: any) {
+        this.afs.collection("exwh_lae").doc(docid).set(data);
+    }
 }

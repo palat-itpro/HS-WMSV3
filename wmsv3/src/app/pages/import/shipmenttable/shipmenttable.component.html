@@ -44,9 +44,10 @@
         </div>
         </table>
         <br>
-        <div *ngIf="v.naqiaRelease == false; else released" >
+        <div *ngIf="v.naqiaRelease == false; else released">
             <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"></p-confirmDialog>
-            <p-button label="Naqia release" icon="pi pi-check" iconPos="left" class="p-button-success" (click)="submitNaqia(v.shipmentNumber,v.containerList)"></p-button>
+            <p-button label="Naqia release" icon="pi pi-check" iconPos="left" class="p-button-success"
+                (click)="submitNaqia(v.shipmentNumber,v.containerList,v.shipmentNumber,v.agent,v.discharge)"></p-button>
             <!-- <button pButton type="button" label="Naqia release" (click)="submitNaqia(v.shipmentNumber)" icon="pi pi-check"></button> -->
         </div>
         <ng-template #released>
