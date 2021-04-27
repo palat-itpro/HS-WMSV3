@@ -43,13 +43,12 @@
                             <input type="text" formControlName="containerNumber" pInputText placeholder="container number" />
                         </div>
 
-                        <button pButton type="button" icon="pi pi-times" label=" - container " class="p-button-rounded p-button-danger p-button-outlined p-ripple p-button p-component p-button-icon-only" (click)="removeContainer(i)"></button>
-                        <button pButton type="button" icon="pi pi-plus" label=" - container " class="p-button-rounded p-button-danger p-button-outlined p-ripple p-button p-component p-button-icon-only" (click)="addSku(i)"></button>
-
                         <div class="p-formgroup">
                             <div class="p-field">
                                 <input type="text" formControlName="skuCode" pInputText placeholder="sku" />
+                                <input type="text" formControlName="qty" pInputText placeholder="qty" />
                                 </div>
+                                <button pButton type="button" icon="pi pi-times" label=" - container " class="p-button-rounded p-button-danger p-button-outlined p-button p-button-icon-only" (click)="removeContainer(i)"></button>
                                 </div>
                     </div>
                   <hr>

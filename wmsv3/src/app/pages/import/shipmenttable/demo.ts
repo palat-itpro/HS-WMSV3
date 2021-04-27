@@ -7,6 +7,8 @@ export const shipmentData = {
     loadingdate: 1617268500,
     discharge: "1618833548",
     status: "active",
+    naqiaRelease: false,
+    releaseUpdateBy:'',
     total: [
         { skuCode: "SL250", qty: 1250 },
         { skuCode: "SL500", qty: 1250 },

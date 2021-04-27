@@ -4,6 +4,11 @@ import { shipmentData } from "./demo";
 import { Component, OnInit } from "@angular/core";
 // import { shipmentData as shipmentDatamModel } from './demo';
 import * as moment from "moment";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import {ConfirmationService} from 'primeng/api';
+import * as firebase from "firebase"
+import { PrimeNGConfig } from 'primeng/api';
+import {Message} from 'primeng/api';
 
 export interface shipmentmodel {
     [x: string]: any;
@@ -34,6 +39,7 @@ export interface shipmentmodel {
     selector: "app-shipmenttable",
     templateUrl: "./shipmenttable.component.html",
     styleUrls: ["./shipmenttable.component.css"],
+    providers: [ConfirmationService]
 })
 export class ShipmenttableComponent implements OnInit {
     dataSource: shipmentmodel;
@@ -42,7 +48,16 @@ export class ShipmenttableComponent implements OnInit {
     displayedColumns = ["SHIPMENT", "CONT"];
     subTableColumns = ["SKU", "QTY", "TON"];
 
-    constructor(private afs: AngularFirestore) {}
+    timeStamp = firebase.default.firestore.FieldValue.serverTimestamp()
+
+    constructor(private afs: AngularFirestore, private fb: FormBuilder,private cf:ConfirmationService,
+        private primengConfig: PrimeNGConfig
+        ) {}
+
+    naqiInspection: FormGroup;
+    msgs: Message[] = [];
+    position: string;
+    userName = localStorage.getItem("userName");
 
     dftData = {
         SWIRE: 35,
@@ -89,6 +104,11 @@ export class ShipmenttableComponent implements OnInit {
 
     ngAfterViewInit(): void {}
     ngOnInit() {
+        this.primengConfig.ripple = true;
+
+        this.naqiInspection = this.fb.group({
+            naqiareleaseDate:[,Validators.required]
+        })
         // this.afs
         //     .collection("lae_shipment")
         //     .doc(shipmentData.shipmentNumber)
@@ -113,17 +133,27 @@ export class ShipmenttableComponent implements OnInit {
             });
     }
 
-    //     sum = prod.reduce(function(acc, curr) {
-    //   let findIndex = acc.findIndex(item => item.name === curr.name);
 
-    //   if (findIndex === -1) {
-    //     acc.push(curr)
-    //   } else {
+    submitNaqia(docId:string,v:any) {
+        this.cf.confirm({
+            message: 'Are you sure that you want to proceed?',
+            header: 'Confirmation',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {
+                this.msgs = [{severity:'info', summary:'Confirmed', detail:'You have accepted'}];
+                // this.afs.collection("lae_shipment").doc(docId).update({
+                //     releaseUpdateBy:this.userName,
+                //     naqiaRelease: true,
+                //     naqiaReleaseDate:this.timeStamp
+                // })
+                v.forEach((element:any) => {
+                    console.log(element)
+                });
+            },
+            reject: () => {
+                this.msgs = [{severity:'info', summary:'Rejected', detail:'You have rejected'}];
+            }
+        });
+    }
 
-    //     acc[findIndex].quantity += curr.quantity
-    //   }
-    //   return acc;
-    // }, [])
-
-    // console.log(sum)
 }
