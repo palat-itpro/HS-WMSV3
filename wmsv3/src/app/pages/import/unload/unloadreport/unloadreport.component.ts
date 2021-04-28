@@ -19,10 +19,25 @@ export class UnloadreportComponent implements OnInit {
 
     unloadForm: FormGroup;
     containerData: Observable<any>;
-    docID = this.route.snapshot.paramMap.get("docid");
+    docID: any;
 
     ngOnInit(): void {
-        this.afs.collection("exwh_lae").doc().valueChanges().subscribe();
-        this.unloadForm = this.fb.group({});
+        this.unloadForm = this.fb.group({
+            sku: [],
+            partialUnload: false,
+            actualUnload: [],
+            remaining: [],
+            damageRecord: [],
+        });
+        this.docID = this.route.snapshot.paramMap.get("docid");
+        this.afs
+            .collection("exwh_lae")
+            .doc(this.docID)
+            .valueChanges()
+            .subscribe((res: any) => {
+                this.containerData = res;
+                console.log(res);
+                this.unloadForm.patchValue({ sku: res.sku });
+            });
     }
 }

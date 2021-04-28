@@ -64,7 +64,7 @@ import { AppHelpComponent } from "./pages/app.help.component";
                             component: UnloadComponent,
                         },
                         {
-                            path: "import/unloadreport:docid",
+                            path: "import/unloadreport/:docid",
                             component: UnloadreportComponent,
                         },
                         //
