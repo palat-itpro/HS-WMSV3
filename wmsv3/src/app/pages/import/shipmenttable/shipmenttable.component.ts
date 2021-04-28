@@ -163,6 +163,8 @@ export class ShipmenttableComponent implements OnInit {
                         discharge: discharge,
                         agent: agent,
                         status: "ready to unload",
+                        unloadStart: this.timeStamp,
+                        cheifUnload: this.userName,
                     });
                 });
             },

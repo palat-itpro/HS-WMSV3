@@ -140,6 +140,7 @@ import { AngularFireModule } from "@angular/fire";
 import { AddshipmentComponent } from "./pages/import/addshipment/addshipment.component";
 import { UnloadComponent } from "./pages/import/unload/unload.component";
 import { UnloadingComponent } from "./pages/import/unload/unloading/unloading.component";
+import { UnloadreportComponent } from './pages/import/unload/unloadreport/unloadreport.component';
 
 @NgModule({
     imports: [
@@ -268,6 +269,7 @@ import { UnloadingComponent } from "./pages/import/unload/unloading/unloading.co
         AddshipmentComponent,
         UnloadComponent,
         UnloadingComponent,
+        UnloadreportComponent,
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
