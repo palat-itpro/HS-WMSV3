@@ -1,21 +1,22 @@
 <p-card>
-    <h5>UNLOAD REPORT {{docID}}</h5>
-    <div class="p-grid p-fluid">
-
-        <div class="p-col-12 p-md-4">
-            <div class="p-inputgroup">
-                <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-                <input type="text" pInputText placeholder="Username">
+    <form formGroup="unloadForm">
+        <h5>UNLOAD REPORT {{docID}}</h5>
+        <div class="p-fluid">
+            <div class="p-field-checkbox">
+                <p-checkbox name="partialUnload" value="Chicago" formControlName="partialUnload"></p-checkbox>
+                <label for="city1">Partial Unload</label>
             </div>
+
+            <div formArrayName="sku">
+                <div class="p-field p-col" *ngFor="let sku of skuForm.controls;let i = index" [formGroupName]="i">
+                    <label for="sku">SKU</label>
+                    <input id="sku" type="text" formControlName="skuCode" pInputText>
+                    <input id="sku" type="text" formControlName="qty" pInputText>
+                </div>
+            </div>
+
         </div>
 
-        <div class="p-col-12 p-md-4">
-            <div class="p-inputgroup">
-                <span class="p-inputgroup-addon">www</span>
-                <input type="text" pInputText placeholder="Website">
-            </div>
-        </div>
-
-    </div>
+    </form>
 </p-card>
 {{unloadForm.value | json}}
