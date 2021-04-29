@@ -1,8 +1,9 @@
 import { Router, ActivatedRoute } from "@angular/router";
 import { Observable } from "rxjs";
 import { AngularFirestore } from "@angular/fire/firestore";
-import { FormArray, FormBuilder, FormGroup, Form } from "@angular/forms";
-import { Component, OnInit } from "@angular/core";
+import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
+import { Component, Input, OnInit } from "@angular/core";
+import { MessageService, SelectItem } from "primeng/api";
 
 @Component({
     selector: "app-unloadreport",
@@ -14,10 +15,10 @@ export class UnloadreportComponent implements OnInit {
         private afs: AngularFirestore,
         private fb: FormBuilder,
         private router: Router,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
     ) {
         this.unloadForm = this.fb.group({
-            sku: [],
+            sku: this.fb.array([]),
             partialUnload: false,
             actualUnload: [],
             remaining: [],
@@ -28,9 +29,14 @@ export class UnloadreportComponent implements OnInit {
     containerData: Observable<any>;
     unloadForm: FormGroup;
     docID: any;
+    selectedrow: any[];
+
+    @Input()
+    group: string
 
     ngOnInit(): void {
         this.docID = this.route.snapshot.paramMap.get("docid");
+
         this.afs
             .collection("exwh_lae")
             .doc(this.docID)
@@ -38,8 +44,10 @@ export class UnloadreportComponent implements OnInit {
             .subscribe((res: any) => {
                 this.containerData = res;
                 console.log(res);
-                this.addSku();
-                // this.unloadForm.patchValue({ sku: res.sku });
+                res.sku.forEach(element => {
+                    this.addSku();
+                });
+                this.unloadForm.patchValue({ sku: res.sku });
             });
     }
 
