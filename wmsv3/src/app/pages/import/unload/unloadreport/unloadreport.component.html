@@ -1,29 +1,70 @@
-<!-- <p-card>
+<div class="p-md-row p-sm-col">
+    <p-fieldset [legend]="docID + ' Unload Report'">
+        <form [formGroup]="unloadForm">
+            <div class="p-field p-col-12 p-md-4">
+                <p-panel [header]="'Unload detail'" *ngIf="unloadForm.value.unloadStart != null">
+                    <p>Unload start @ {{unloadForm.value.unloadStart.toMillis() | date: 'dd/MMM/YYYY HH:MM a'}}</p>
+                    <p>Cheif unload : {{unloadForm.value.cheifUnload}}</p>
+                    <hr>
+                    <div class="p-field p-col-12 p-md-4">
+                        <label for="partial">Partial unload</label><br>
+                        <p-toggleButton id="partial" formControlName="partialUnload" onIcon="pi pi-check"
+                            offIcon="pi pi-times">
+                        </p-toggleButton>
+                    </div>
+                </p-panel>
 
-    <h5>UNLOAD REPORT {{docID}}</h5>
-    <div class="p-fluid">
-
-
-    </div>
-    </form>
-</p-card>
-{{unloadForm.value | json}} -->
-
-
-<form formGroup="unloadForm">
-
-    <div class="p-field-checkbox">
-        <p-checkbox formControlName="partialUnload"></p-checkbox>
-        <label>Partial Unload</label>
-    </div>
-
-    <div>
-        <div formArrayName="sku">
-            <div *ngFor="let sku of skuForm.controls;let i=index" [formGroupName]="i">
-                <input type="text" formControlName="skuCode" pInputText>
-                <input type="text" formControlName="qty" pInputText>
             </div>
-        </div>
-    </div>
 
-</form>
+            <div style="width: 50%;" formArrayName="sku">
+                <div class="p-field p-col-12 p-md-4">
+                </div>
+                <div *ngFor="let item of skuForm.controls;let i=index" [formArrayName]="i">
+                    <div class="p-grid">
+                        <div class="p-field p-col-12 p-md-8">
+
+                            <p-fieldset [legend]="unloadForm.value.sku[i].skuCode">
+                                <p>Documented Quantity : {{unloadForm.value.sku[i].qty}}</p>
+                                <br>
+                                <span class="p-float-label">
+                                    <input class="textinput" id="skuCode" formControlName="skuCode" pInputText>
+                                    <label for="skuCode">SKU CODE</label>
+                                    <span class="p-float-label">
+                                        <input class="textinput" id="qty" formControlName="qty" pInputText>
+                                        <label for="qty">QTY</label>
+                                    </span>
+                                </span>
+                                <span class="p-float-label">
+                                    <p-inputNumber id="damaged" formControlName="damaged" [showButtons]="true"
+                                        buttonLayout="horizontal" spinnerMode="horizontal" step="1" [min]="0"
+                                        [max]="unloadForm.value.sku[i].qty" [(ngModel)]="damaged">
+                                    </p-inputNumber>
+                                    <label for="damaged">DAMAGED</label>
+                                </span>
+                                <span><br></span>
+                                <span><br></span>
+                                <span class="p-float-label">
+                                    <p-inputNumber id="short" formControlName="short" [showButtons]="true"
+                                        buttonLayout="horizontal" spinnerMode="horizontal" step="1" [min]="0"
+                                        [max]="unloadForm.value.sku[i].qty" [(ngModel)]="short">
+                                    </p-inputNumber>
+                                    <label for="short">SHORT</label>
+                                </span>
+                                <span><br></span>
+                                <span><br></span>
+                                <span class="p-float-label">
+                                    <p-inputNumber id="extra" formControlName="extra" [showButtons]="true"
+                                        buttonLayout="horizontal" spinnerMode="horizontal" step="1" [min]="0"
+                                        [max]="unloadForm.value.sku[i].qty" [(ngModel)]="extra">
+                                    </p-inputNumber>
+                                    <label for="extra">EXTRA</label>
+                                </span>
+                            </p-fieldset>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </p-fieldset>
+</div>
+{{unloadForm.value | json}}

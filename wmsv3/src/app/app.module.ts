@@ -1,3 +1,4 @@
+import { FormlyPrimeNGModule } from "@ngx-formly/primeng";
 import { ShipmenttableComponent } from "./pages/import/shipmenttable/shipmenttable.component";
 import { environment } from "./../environments/environment.prod";
 import { NgModule } from "@angular/core";
@@ -140,7 +141,8 @@ import { AngularFireModule } from "@angular/fire";
 import { AddshipmentComponent } from "./pages/import/addshipment/addshipment.component";
 import { UnloadComponent } from "./pages/import/unload/unload.component";
 import { UnloadingComponent } from "./pages/import/unload/unloading/unloading.component";
-import { UnloadreportComponent } from './pages/import/unload/unloadreport/unloadreport.component';
+import { UnloadreportComponent } from "./pages/import/unload/unloadreport/unloadreport.component";
+import { FormlyModule } from "@ngx-formly/core";
 
 @NgModule({
     imports: [
