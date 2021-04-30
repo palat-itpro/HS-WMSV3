@@ -2,7 +2,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { Observable } from "rxjs";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Component, Input, OnInit } from "@angular/core";
+import { AfterViewInit, Component, Input, OnInit } from "@angular/core";
 import { MessageService, SelectItem } from "primeng/api";
 import { FormlyFieldConfig, FormlyFormOptions } from "@ngx-formly/core";
 
@@ -17,7 +17,7 @@ export class UnloadreportComponent implements OnInit {
         private fb: FormBuilder,
         private router: Router,
         private route: ActivatedRoute
-    ) {}
+    ) { }
 
     containerData: contData;
     unloadForm: FormGroup;
@@ -27,6 +27,7 @@ export class UnloadreportComponent implements OnInit {
     damaged: Number = 0;
     short: Number = 0;
     extra: Number = 0;
+    reportGen = false;
 
     ngOnInit(): void {
         this.docID = this.route.snapshot.paramMap.get("docid");
@@ -47,20 +48,26 @@ export class UnloadreportComponent implements OnInit {
             .valueChanges()
             .subscribe((res: any) => {
                 this.containerData = res;
-                console.log(res.sku);
-                res.sku.forEach(() => {
-                    this.addSku();
-                });
-                this.unloadForm.patchValue({
-                    sku: res.sku,
-                    unloadStart: res.unloadStart,
-                    cheifUnload: res.cheifUnload,
-                });
+                // console.log(res.sku);
             });
     }
 
     get skuForm() {
         return this.unloadForm.get("sku") as FormArray;
+    }
+
+    initReport() {
+        this.reportGen = true;
+        let res = this.containerData
+        console.log(res);
+        res.sku.forEach(() => {
+            this.addSku();
+        });
+        this.unloadForm.patchValue({
+            sku: res.sku,
+            unloadStart: res.unloadStart,
+            cheifUnload: res.cheifUnload,
+        });
     }
 
     addSku() {

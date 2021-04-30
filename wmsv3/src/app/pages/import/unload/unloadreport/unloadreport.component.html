@@ -1,5 +1,8 @@
 <div class="p-md-row p-sm-col">
     <p-fieldset [legend]="docID + ' Unload Report'">
+        <button *ngIf="reportGen == false" pButton label=" + Report" (click)="initReport()" type="button"
+            class="p-button-info"></button>
+        <hr>
         <form [formGroup]="unloadForm">
             <div class="p-field p-col-12 p-md-4">
                 <p-panel [header]="'Unload detail'" *ngIf="unloadForm.value.unloadStart != null">
