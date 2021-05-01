@@ -17,7 +17,7 @@ var Demo = /** @class */ (function () {
                 { skuCode: "SL250", qty: 1250 },
                 { skuCode: "SL500", qty: 1250 },
                 { skuCode: "SL1", qty: 100 },
-                { skuCode: "FOAM_105P", qty: 170 },
+                { skuCode: "FOAMBOX_105P", qty: 170 },
             ],
             containerList: [
                 {
@@ -32,35 +32,35 @@ var Demo = /** @class */ (function () {
                     containerNumber: "CMAU 3155119",
                     sku: [
                         { skuCode: "SL500", qty: 1250 },
-                        { skuCode: "FOAM_105P", qty: 28 },
+                        { skuCode: "FOAMBOX_105P", qty: 28 },
                     ]
                 },
                 {
                     containerNumber: "FCIU 6183275",
                     sku: [
                         { skuCode: "SL1", qty: 25 },
-                        { skuCode: "FOAM_105P", qty: 37 },
+                        { skuCode: "FOAMBOX_105P", qty: 37 },
                     ]
                 },
                 {
                     containerNumber: "GLDU 9896877",
                     sku: [
                         { skuCode: "SL1", qty: 25 },
-                        { skuCode: "FOAM_105P", qty: 35 },
+                        { skuCode: "FOAMBOX_105P", qty: 35 },
                     ]
                 },
                 {
                     containerNumber: "TEMU 0998759",
                     sku: [
                         { skuCode: "SL1", qty: 25 },
-                        { skuCode: "FOAM_105P", qty: 35 },
+                        { skuCode: "FOAMBOX_105P", qty: 35 },
                     ]
                 },
                 {
                     containerNumber: "TLLU 2081749",
                     sku: [
                         { skuCode: "SL1", qty: 25 },
-                        { skuCode: "FOAM_105P", qty: 35 },
+                        { skuCode: "FOAMBOX_105P", qty: 35 },
                     ]
                 },
             ]

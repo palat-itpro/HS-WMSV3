@@ -1,7 +1,11 @@
 <div class="p-md-row p-sm-col">
     <p-fieldset [legend]="docID + ' Unload Report'">
-        <button *ngIf="reportGen == false" pButton label=" + Report" (click)="initReport()" type="button"
-            class="p-button-info"></button>
+        <button *ngIf="reportGen == false && containerData != null || undefined" pButton label=" + Report"
+            (click)="initReport()" type="button" class="p-button-info"></button>
+        <div *ngIf="reportGen == false && containerData == null || undefined" #loading>
+            <p-progressSpinner></p-progressSpinner>
+        </div>
+
         <hr>
         <form [formGroup]="unloadForm">
             <div class="p-field p-col-12 p-md-4">
@@ -20,54 +24,83 @@
             </div>
 
             <div style="width: 50%;" formArrayName="sku">
-                <div class="p-field p-col-12 p-md-4">
+                <div class="p-field p-md-4">
                 </div>
                 <div *ngFor="let item of skuForm.controls;let i=index" [formArrayName]="i">
                     <div class="p-grid">
                         <div class="p-field p-col-12 p-md-8">
 
                             <p-fieldset [legend]="unloadForm.value.sku[i].skuCode">
-                                <p>Documented Quantity : {{unloadForm.value.sku[i].qty}}</p>
+                                <p>Remaining Quantity : {{unloadForm.value.remaining[i].qty}}</p>
                                 <br>
                                 <span class="p-float-label">
-                                    <input class="textinput" id="skuCode" formControlName="skuCode" pInputText>
+                                    <input class="textinput" disabled id="skuCode" formControlName="skuCode" pInputText>
                                     <label for="skuCode">SKU CODE</label>
-                                    <span class="p-float-label">
-                                        <input class="textinput" id="qty" formControlName="qty" pInputText>
-                                        <label for="qty">QTY</label>
-                                    </span>
+                                    <!-- <span class="p-float-label">
+                                        <input class="textinput" id="qty" formControlName="qty" pInputText disabled
+                                            [value]="getActualUnload(unloadForm.value.sku[i].qty,unloadForm.value.sku[i].damaged,unloadForm.value.sku[i].short,unloadForm.value.sku[i].extra,unloadForm.value.sku[i].partial)">
+
+                                        <label for="qty">PACKING LIST QTY</label>
+                                    </span> -->
                                 </span>
+                                <span *ngIf="unloadForm.value.partialUnload == true" class="p-float-label">
+                                    <p-inputNumber id="damaged" formControlName="partial" [showButtons]="true"
+                                        buttonLayout="horizontal" spinnerMode="horizontal" step="1" [min]="0"
+                                        decrementButtonClass="p-button-success" incrementButtonClass="p-button-success"
+                                        [max]="unloadForm.value.remaining[i].qty" value="damaged">
+                                    </p-inputNumber>
+                                    <label for="damaged">PARTIAL</label>
+                                </span>
+                                <span><br></span>
+                                <span><br></span>
                                 <span class="p-float-label">
                                     <p-inputNumber id="damaged" formControlName="damaged" [showButtons]="true"
                                         buttonLayout="horizontal" spinnerMode="horizontal" step="1" [min]="0"
-                                        [max]="unloadForm.value.sku[i].qty" value="damaged">
+                                        decrementButtonClass="p-button-danger" incrementButtonClass="p-button-danger"
+                                        [max]="unloadForm.value.remaining[i].qty" value="damaged">
                                     </p-inputNumber>
                                     <label for="damaged">DAMAGED</label>
                                 </span>
                                 <span><br></span>
                                 <span><br></span>
-                                <span class="p-float-label">
+                                <span *ngIf="unloadForm.value.partialUnload == false" class="p-float-label">
                                     <p-inputNumber id="short" formControlName="short" [showButtons]="true"
                                         buttonLayout="horizontal" spinnerMode="horizontal" step="1" [min]="0"
-                                        [max]="unloadForm.value.sku[i].qty" value="short">
+                                        decrementButtonClass="p-button-warning" incrementButtonClass="p-button-warning"
+                                        [max]="unloadForm.value.remaining[i].qty" value="short">
                                     </p-inputNumber>
                                     <label for="short">SHORT</label>
                                 </span>
                                 <span><br></span>
                                 <span><br></span>
-                                <span class="p-float-label">
+                                <span *ngIf="unloadForm.value.partialUnload == false" class="p-float-label">
                                     <p-inputNumber id="extra" formControlName="extra" [showButtons]="true"
                                         buttonLayout="horizontal" spinnerMode="horizontal" step="1" [min]="0"
-                                        [max]="unloadForm.value.sku[i].qty" value="extra">
+                                        decrementButtonClass="p-button-info" incrementButtonClass="p-button-info"
+                                        [max]="unloadForm.value.remaining[i].qty" value="extra">
                                     </p-inputNumber>
                                     <label for="extra">EXTRA</label>
                                 </span>
                                 <span><br></span>
                                 <span><br></span>
                                 <span>
-                                    <h4>Actual unload :
-                                        {{getActualUnload(unloadForm.value.sku[i].qty,unloadForm.value.sku[i].damaged,unloadForm.value.sku[i].short,unloadForm.value.sku[i].extra)}}
-                                    </h4>
+                                    <hr>
+                                    <div style="width: fit-content;justify-content: center;">
+                                        <p-panel
+                                            [header]="'ACTUAL UNLOAD ' + '(' + unloadForm.value.remaining[i].skuCode + ')' ">
+                                            <h6 style="color: rgb(18, 82, 160);">
+                                                QTY : &nbsp;
+                                                {{getActualUnload(unloadForm.value.remaining[i].qty,unloadForm.value.remaining[i].damaged,unloadForm.value.remaining[i].short,unloadForm.value.remaining[i].extra,unloadForm.value.remaining[i].partial)}}
+                                            </h6>
+                                            <h6 *ngIf="unloadForm.value.partialUnload == true"
+                                                style="color: rgb(18, 82, 160);">
+                                                REMAINING : &nbsp;
+                                                {{
+                                                getRemaining(unloadForm.value.remaining[i].qty,unloadForm.value.remaining[i].damaged,unloadForm.value.remaining[i].short,unloadForm.value.remaining[i].extra,unloadForm.value.remaining[i].partial)}}
+                                            </h6>
+                                        </p-panel>
+
+                                    </div>
                                 </span>
                             </p-fieldset>
                         </div>
@@ -75,6 +108,7 @@
                 </div>
             </div>
         </form>
+        <button pButton (click)="submitHandler()" type="button" label="Submit" class="p-button-success"></button>
     </p-fieldset>
 </div>
 {{unloadForm.value | json}}

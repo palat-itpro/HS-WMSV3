@@ -16,5 +16,14 @@ export class AppComponent implements OnInit {
         private afs: AngularFirestore
     ) {}
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.afs
+            .collection("soh")
+            .valueChanges()
+            .subscribe((res: any) => {
+                res.forEach((element: any) => {
+                    localStorage.setItem(element.SKU_CODE, element.QTY);
+                });
+            });
+    }
 }

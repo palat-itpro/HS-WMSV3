@@ -75,6 +75,7 @@ import { TooltipModule } from "primeng/tooltip";
 import { TreeModule } from "primeng/tree";
 import { TreeTableModule } from "primeng/treetable";
 import { VirtualScrollerModule } from "primeng/virtualscroller";
+import { ProgressSpinnerModule } from "primeng/progressspinner";
 
 // Application Components
 import { AppCodeModule } from "./app.code.component";
@@ -143,6 +144,7 @@ import { UnloadComponent } from "./pages/import/unload/unload.component";
 import { UnloadingComponent } from "./pages/import/unload/unloading/unloading.component";
 import { UnloadreportComponent } from "./pages/import/unload/unloadreport/unloadreport.component";
 import { FormlyModule } from "@ngx-formly/core";
+import { from } from "rxjs";
 
 @NgModule({
     imports: [
@@ -219,6 +221,7 @@ import { FormlyModule } from "@ngx-formly/core";
         VirtualScrollerModule,
         AppCodeModule,
         ReactiveFormsModule,
+        ProgressSpinnerModule,
         AngularFireModule.initializeApp(environment.firebaseConfig),
     ],
     declarations: [
