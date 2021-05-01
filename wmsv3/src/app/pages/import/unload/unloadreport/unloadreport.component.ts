@@ -28,9 +28,11 @@ export class UnloadreportComponent implements OnInit {
     short: Number = 0;
     extra: Number = 0;
     reportGen = false;
+    docValue: any;
 
     ngOnInit(): void {
         this.docID = this.route.snapshot.paramMap.get("docid");
+
 
         this.unloadForm = this.fb.group({
             sku: this.fb.array([]),
@@ -41,7 +43,7 @@ export class UnloadreportComponent implements OnInit {
             unloadStart: [, Validators.required],
             cheifUnload: [, Validators.required],
         });
-
+        this.docValue = this.unloadForm.value
         this.afs
             .collection("exwh_lae")
             .doc(this.docID)
@@ -70,6 +72,8 @@ export class UnloadreportComponent implements OnInit {
         });
     }
 
+
+
     addSku() {
         const items = this.fb.group({
             skuCode: [, Validators.required],
@@ -79,6 +83,10 @@ export class UnloadreportComponent implements OnInit {
             extra: [0, Validators.required],
         });
         this.skuForm.push(items);
+    }
+
+    getActualUnload(docQty: number, damaged: number, short: number, extra: number) {
+        return docQty + extra - damaged - short
     }
 }
 

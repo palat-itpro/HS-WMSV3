@@ -40,7 +40,7 @@
                                 <span class="p-float-label">
                                     <p-inputNumber id="damaged" formControlName="damaged" [showButtons]="true"
                                         buttonLayout="horizontal" spinnerMode="horizontal" step="1" [min]="0"
-                                        [max]="unloadForm.value.sku[i].qty" [(ngModel)]="damaged">
+                                        [max]="unloadForm.value.sku[i].qty" value="damaged">
                                     </p-inputNumber>
                                     <label for="damaged">DAMAGED</label>
                                 </span>
@@ -49,7 +49,7 @@
                                 <span class="p-float-label">
                                     <p-inputNumber id="short" formControlName="short" [showButtons]="true"
                                         buttonLayout="horizontal" spinnerMode="horizontal" step="1" [min]="0"
-                                        [max]="unloadForm.value.sku[i].qty" [(ngModel)]="short">
+                                        [max]="unloadForm.value.sku[i].qty" value="short">
                                     </p-inputNumber>
                                     <label for="short">SHORT</label>
                                 </span>
@@ -58,9 +58,16 @@
                                 <span class="p-float-label">
                                     <p-inputNumber id="extra" formControlName="extra" [showButtons]="true"
                                         buttonLayout="horizontal" spinnerMode="horizontal" step="1" [min]="0"
-                                        [max]="unloadForm.value.sku[i].qty" [(ngModel)]="extra">
+                                        [max]="unloadForm.value.sku[i].qty" value="extra">
                                     </p-inputNumber>
                                     <label for="extra">EXTRA</label>
+                                </span>
+                                <span><br></span>
+                                <span><br></span>
+                                <span>
+                                    <h4>Actual unload :
+                                        {{getActualUnload(unloadForm.value.sku[i].qty,unloadForm.value.sku[i].damaged,unloadForm.value.sku[i].short,unloadForm.value.sku[i].extra)}}
+                                    </h4>
                                 </span>
                             </p-fieldset>
                         </div>
