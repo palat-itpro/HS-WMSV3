@@ -7,15 +7,14 @@ import {
     FormGroup,
     Validators,
 } from "@angular/forms";
-import * as firebase from "firebase";
-
+import firebase from "firebase/app";
 @Component({
     selector: "app-addshipment",
     templateUrl: "./addshipment.component.html",
     styleUrls: ["./addshipment.component.scss"],
 })
 export class AddshipmentComponent implements OnInit {
-    Firebase = firebase.default;
+    Firebase = firebase;
     timestamp = this.Firebase.firestore.FieldValue.serverTimestamp();
     user: any = localStorage.getItem("userName");
 
@@ -63,21 +62,23 @@ export class AddshipmentComponent implements OnInit {
         this.containerForm.removeAt(i);
     }
 
-  //----------------------------------------------------------------------------------------------------------------------//
+    //----------------------------------------------------------------------------------------------------------------------//
 
-  skuGroup(): FormGroup {
-      return this.fb.group({
-        skuCode: [],
-        qty: [],
-      })
-  }
+    skuGroup(): FormGroup {
+        return this.fb.group({
+            skuCode: [],
+            qty: [],
+            extra: [],
+            shoprt: [],
+            damaged: [],
+        });
+    }
 
-
-  addSku(index): void {
-
-    (<FormArray>(<FormGroup>this.containerForm.controls[index]).controls.contacts).push(this.skuGroup());
-  }
-
+    addSku(index): void {
+        (<FormArray>(
+            (<FormGroup>this.containerForm.controls[index]).controls.contacts
+        )).push(this.skuGroup());
+    }
 
     skuList = [
         { skuCode: "AO01" },

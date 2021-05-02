@@ -1,119 +1,129 @@
-<p-table [value]="dataSource" [responsive]="true">
-    <ng-template pTemplate="header">
-        <tr>
-            <th>Shipment</th>
-            <th>DISCHARGE</th>
-            <th>ACTUAL DFT</th>
-            <th>DFT (SAFE MARGIN)</th>
-            <th>UPDATE</th>
-            <th>CONTAINER</th>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-v>
-        <tr>
-            <td>
-                <ng-template pTemplate="header">
-                    {{v.shipmentNumber}}
-                </ng-template>
-                <p-fieldset [legend]="v.shipmentNumber">
-                    <!-- <i class="pi pi-folder-open"> &nbsp; </i> {{v.shipmentNumber}} -->
-                    <table>
-                        <div>
-                            <tr>
-                                <th>SKU</th>
-                                <th>QTY</th>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div *ngFor="let item of dataSource;let i=index">
-                                        <div *ngFor="let v of item.total">
-                                <td>{{v.skuCode}}</td>
-                        </div>
-                        </div>
-            </td>
-            <td>
-                <div *ngFor="let item of dataSource;let i=index">
-                    <div *ngFor="let v of item.total">
+<p-card>
 
-            <td>{{v.qty}}</td>
-            </div>
-            </div>
-            </td>
-        </tr>
-
-        </div>
-        </table>
-        <br>
-        <div *ngIf="v.naqiaRelease == false; else released">
-            <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"></p-confirmDialog>
-            <p-button label="Naqia release" icon="pi pi-check" iconPos="left" class="p-button-success"
-                (click)="submitNaqia(v.shipmentNumber,v.containerList,v.shipmentNumber,v.agent,v.discharge)"></p-button>
-            <!-- <button pButton type="button" label="Naqia release" (click)="submitNaqia(v.shipmentNumber)" icon="pi pi-check"></button> -->
-        </div>
-        <ng-template #released>
-            <p-panel *ngIf="v.naqiaReleaseDate" header="Naqia Released">
-                <div>
-                    <p>{{v.naqiaReleaseDate.toMillis() | date: "dd/mm/yyyy HH:mm a"}}</p>
-                </div>
-            </p-panel>
+    <p-table [value]="dataSource" [responsive]="true">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Shipment</th>
+                <th>DISCHARGE</th>
+                <th>ACTUAL DFT</th>
+                <th>DFT (SAFE MARGIN)</th>
+                <th>UPDATE</th>
+                <th>CONTAINER</th>
+            </tr>
         </ng-template>
-        </p-fieldset>
-
-        </td>
-        <td>
-            <p-panel header="DISCHARGE DATE/TIME">
-                {{v.discharge.toMillis() | date: 'MMM d, y, h:mm:ss a'}}
-            </p-panel>
-
-        <td>
-            <p-panel [header]="getDft(v.discharge,v.agent)['actualDftLeft'] + ' DAYS'">
-                <P>
-                    {{getDft(v.discharge,v.agent)["actualDftDate"]}}
-                </P>
-            </p-panel>
-        </td>
-        <td>
-            <p-panel [header]="getDft(v.discharge,v.agent)['safeDftLeft'] + ' DAYS'">
-                <p>
-                    {{getDft(v.discharge,v.agent)["safeDft"]}} &nbsp;
-                </p>
-            </p-panel>
-        </td>
-        <td>
-            <p-panel [header]="'Update by ' + v.addedBy">
-                <p>
-                    {{v.update.toMillis() | date: 'MMM d, y'}}
-                </p>
-            </p-panel>
-
-        </td>
-        <td>
-            <p-accordion>
-                <p-accordionTab header="Packing List">
-                    <div style="padding: 10px" *ngFor="let cont of v.containerList">
+        <ng-template pTemplate="body" let-v>
+            <tr>
+                <td>
+                    <ng-template pTemplate="header">
+                        {{v.shipmentNumber}}
+                    </ng-template>
+                    <p-fieldset [legend]="v.shipmentNumber">
+                        <!-- <i class="pi pi-folder-open"> &nbsp; </i> {{v.shipmentNumber}} -->
                         <table>
-                            <p-accordion>
-                                <p-accordionTab [header]="cont.containerNumber">
-                                    <table>
-                                        <tr>
-                                            <th>sku</th>
-                                            <th>qty</th>
-                                        </tr>
-                                        <tr *ngFor="let item of cont.sku">
+                            <div>
+                                <tr>
+                                    <th>SKU</th>
+                                    <th>QTY</th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div *ngFor="let item of dataSource;let i=index">
+                                            <div *ngFor="let v of item.total">
+                                    <td>{{v.skuCode}}</td>
+                            </div>
+                            </div>
+                </td>
+                <td>
+                    <div *ngFor="let item of dataSource;let i=index">
+                        <div *ngFor="let v of item.total">
 
-                                            <td>{{item.skuCode}}</td>
-                                            <td>{{item.qty}}</td>
+                <td>{{v.qty}}</td>
+                </div>
+                </div>
+                </td>
+            </tr>
 
-                                        </tr>
-                                    </table>
-                                </p-accordionTab>
-                            </p-accordion>
-
-                        </table>
+            </div>
+            </table>
+            <br>
+            <div *ngIf="v.naqiaRelease == false; else released">
+                <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"></p-confirmDialog>
+                <p-button label="Naqia release" icon="pi pi-check" iconPos="left" class="p-button-success"
+                    (click)="submitNaqia(v.shipmentNumber,v.containerList,v.shipmentNumber,v.agent,v.discharge)">
+                </p-button>
+                <!-- <button pButton type="button" label="Naqia release" (click)="submitNaqia(v.shipmentNumber)" icon="pi pi-check"></button> -->
+            </div>
+            <ng-template #released>
+                <p-panel *ngIf="v.naqiaReleaseDate" header="Naqia Released">
+                    <div>
+                        <p>{{v.naqiaReleaseDate.toMillis() | date: 'yyyy/MM/dd' }}</p>
                     </div>
-                </p-accordionTab>
-            </p-accordion>
-        </td>
-        </tr>
-    </ng-template>
-</p-table>
+                </p-panel>
+            </ng-template>
+            </p-fieldset>
+
+            </td>
+            <td *ngIf="v.discharge != null || undefined">
+                <p-panel header="DISCHARGE DATE/TIME">
+                    <div *ngIf="v.discharge != null || undefined">
+                        {{v.discharge.toMillis() | date:'yyyy/MM/dd h:mm:ss a'}}
+                    </div>
+                </p-panel>
+
+            <td *ngIf="v.discharge != null || undefined">
+                <p-panel [header]="getDft(v.discharge.toMillis(),v.agent)['actualDftLeft'] + ' DAYS'">
+                    <div *ngIf="v.discharge != null || undefined">
+                        <P>
+                            {{getDft(v.discharge.toMillis(),v.agent)["actualDftDate"]| date: 'dd/MMM/YYYY'}}
+                        </P>
+                    </div>
+
+                </p-panel>
+            </td>
+            <td>
+                <p-panel *ngIf="v.discharge != null || undefined"
+                    [header]="getDft(v.discharge.toMillis(),v.agent)['safeDftLeft'] + ' DAYS'">
+                    <p>
+                        {{getDft(v.discharge.toMillis(),v.agent)["safeDft"] | date: 'dd/MMM/YYYY'}} &nbsp;
+                    </p>
+                </p-panel>
+            </td>
+            <td>
+                <p-panel *ngIf="v.discharge != null || undefined" [header]="'Update by ' + v.addedBy">
+                    <p>
+                        {{v.update.toMillis() | date:'yyyy/MM/dd h:mm:ss a'}}
+                    </p>
+                </p-panel>
+
+            </td>
+            <td>
+                <p-accordion>
+                    <p-accordionTab header="Packing List">
+                        <div style="padding: 10px" *ngFor="let cont of v.containerList">
+                            <table>
+                                <p-accordion>
+                                    <p-accordionTab [header]="cont.containerNumber">
+                                        <table>
+                                            <tr>
+                                                <th>sku</th>
+                                                <th>qty</th>
+                                            </tr>
+                                            <tr *ngFor="let item of cont.sku">
+
+                                                <td>{{item.skuCode}}</td>
+                                                <td>{{item.qty}}</td>
+
+                                            </tr>
+                                        </table>
+                                    </p-accordionTab>
+                                </p-accordion>
+
+                            </table>
+                        </div>
+                    </p-accordionTab>
+                </p-accordion>
+            </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</p-card>

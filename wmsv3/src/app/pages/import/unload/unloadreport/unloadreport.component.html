@@ -15,9 +15,10 @@
                     <hr>
                     <div class="p-field p-col-12 p-md-4">
                         <label for="partial">Partial unload</label><br>
-                        <p-toggleButton id="partial" formControlName="partialUnload" onIcon="pi pi-check"
-                            offIcon="pi pi-times">
+                        <p-toggleButton (click)="partialSelected()" *ngIf="partialClicked == false" id="partial"
+                            formControlName="partialUnload" onIcon="pi pi-check" offIcon="pi pi-check">
                         </p-toggleButton>
+                        <p-toast></p-toast>
                     </div>
                 </p-panel>
 
@@ -88,15 +89,16 @@
                                     <div style="width: fit-content;justify-content: center;">
                                         <p-panel
                                             [header]="'ACTUAL UNLOAD ' + '(' + unloadForm.value.remaining[i].skuCode + ')' ">
-                                            <h6 style="color: rgb(18, 82, 160);">
+                                            <h6 *ngIf="unloadForm.value.partialUnload == false"
+                                                style="color: rgb(18, 82, 160);">
                                                 QTY : &nbsp;
-                                                {{getActualUnload(unloadForm.value.remaining[i].qty,unloadForm.value.remaining[i].damaged,unloadForm.value.remaining[i].short,unloadForm.value.remaining[i].extra,unloadForm.value.remaining[i].partial)}}
+                                                {{getActualUnload(i)}}
                                             </h6>
                                             <h6 *ngIf="unloadForm.value.partialUnload == true"
                                                 style="color: rgb(18, 82, 160);">
                                                 REMAINING : &nbsp;
                                                 {{
-                                                getRemaining(unloadForm.value.remaining[i].qty,unloadForm.value.remaining[i].damaged,unloadForm.value.remaining[i].short,unloadForm.value.remaining[i].extra,unloadForm.value.remaining[i].partial)}}
+                                                getRemaining(i)}}
                                             </h6>
                                         </p-panel>
 

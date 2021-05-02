@@ -145,6 +145,8 @@ import { UnloadingComponent } from "./pages/import/unload/unloading/unloading.co
 import { UnloadreportComponent } from "./pages/import/unload/unloadreport/unloadreport.component";
 import { FormlyModule } from "@ngx-formly/core";
 import { from } from "rxjs";
+import { SohComponent } from './pages/soh/soh.component';
+import { SalesordersComponent } from './pages/sales/salesorders/salesorders.component';
 
 @NgModule({
     imports: [
@@ -275,6 +277,8 @@ import { from } from "rxjs";
         UnloadComponent,
         UnloadingComponent,
         UnloadreportComponent,
+        SohComponent,
+        SalesordersComponent,
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },

@@ -1,3 +1,4 @@
+import { SalesordersComponent } from "./pages/sales/salesorders/salesorders.component";
 import { UnloadreportComponent } from "./pages/import/unload/unloadreport/unloadreport.component";
 import { UnloadComponent } from "./pages/import/unload/unload.component";
 import { AddshipmentComponent } from "./pages/import/addshipment/addshipment.component";
@@ -66,6 +67,10 @@ import { AppHelpComponent } from "./pages/app.help.component";
                         {
                             path: "import/unloadreport/:docid",
                             component: UnloadreportComponent,
+                        },
+                        {
+                            path: "sales/salesorders",
+                            component: SalesordersComponent,
                         },
                         //
                         {

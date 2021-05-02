@@ -31,7 +31,7 @@ export class AppMenuComponent implements OnInit {
                 label: "Shipment",
                 icon: "pi pi-fw pi-list",
                 routerLink: ["import"],
-                badge: 10,
+                badge: 0,
                 items: [
                     {
                         label: "Shipment table",
@@ -46,20 +46,15 @@ export class AppMenuComponent implements OnInit {
                 ],
             },
             {
-                label: "Unload",
+                label: "Sales",
                 icon: "pi pi-fw pi-list",
-                routerLink: ["dispatch"],
-                badge: 10,
+                routerLink: ["sales"],
+                badge: 0,
                 items: [
                     {
-                        label: "Unload",
+                        label: "Sales orders",
                         icon: "pi pi-fw pi-table",
-                        routerLink: ["/import/shipment"],
-                    },
-                    {
-                        label: "Shipment table",
-                        icon: "pi pi-fw pi-table",
-                        routerLink: ["/import/addshipment"],
+                        routerLink: ["/sales/salesorders"],
                     },
                 ],
             },
@@ -67,7 +62,7 @@ export class AppMenuComponent implements OnInit {
                 label: "UI Kit",
                 icon: "pi pi-fw pi-star",
                 routerLink: ["/uikit"],
-                badge: 10,
+                badge: 0,
                 items: [
                     {
                         label: "Form Layout",

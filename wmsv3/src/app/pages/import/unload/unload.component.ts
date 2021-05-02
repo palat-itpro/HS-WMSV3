@@ -3,8 +3,7 @@ import { Observable } from "rxjs";
 import { Component, OnInit } from "@angular/core";
 import { ImportService } from "../services/import.service";
 import { ConfirmationService } from "primeng/api";
-import * as firebase from "firebase";
-
+import firebase from "firebase/app";
 @Component({
     selector: "app-unload",
     templateUrl: "./unload.component.html",
@@ -18,7 +17,7 @@ export class UnloadComponent implements OnInit {
         private confirmationService: ConfirmationService
     ) {}
 
-    timeStamp = firebase.default.firestore.FieldValue.serverTimestamp();
+    timeStamp = firebase.firestore.FieldValue.serverTimestamp();
     userName = localStorage.getItem("userName");
 
     cols: any[] = [

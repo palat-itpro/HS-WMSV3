@@ -1,22 +1,23 @@
-import { Router, ActivatedRoute, ɵEmptyOutletComponent } from "@angular/router";
-import { Observable } from "rxjs";
+import { Router, ActivatedRoute } from "@angular/router";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { AfterViewInit, Component, Input, OnInit } from "@angular/core";
-import { MessageService, SelectItem } from "primeng/api";
-import { FormlyFieldConfig, FormlyFormOptions } from "@ngx-formly/core";
-import * as firebase from "firebase";
+import { Component, OnInit } from "@angular/core";
+import firebase from "firebase/app";
+import { MessageService } from "primeng/api";
+
 @Component({
     selector: "app-unloadreport",
     templateUrl: "./unloadreport.component.html",
     styleUrls: ["./unloadreport.component.scss"],
+    providers: [MessageService],
 })
 export class UnloadreportComponent implements OnInit {
     constructor(
         private afs: AngularFirestore,
         private fb: FormBuilder,
         private router: Router,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private messageService: MessageService
     ) {}
 
     containerData: contData;
@@ -30,17 +31,20 @@ export class UnloadreportComponent implements OnInit {
     extra: Number = 0;
     reportGen = false;
     docValue: any;
+    partialClicked: boolean;
+    emptyCont = false;
     user = localStorage.getItem("userName");
-    timestamp = firebase.default.firestore.FieldValue.serverTimestamp();
+    timestamp = firebase.firestore.FieldValue.serverTimestamp();
 
     ngOnInit(): void {
         this.docID = this.route.snapshot.paramMap.get("docid");
+        this.partialClicked = false;
 
         this.unloadForm = this.fb.group({
             sku: this.fb.array([]),
             partialUnload: [false, Validators.required],
             actualUnload: [, Validators.required],
-            remaining: [, Validators.required],
+            remaining: this.fb.array([]),
             damageRecord: [, Validators.required],
             unloadStart: [, Validators.required],
             cheifUnload: [, Validators.required],
@@ -58,8 +62,22 @@ export class UnloadreportComponent implements OnInit {
             });
     }
 
+    partialSelected() {
+        this.messageService.add({
+            severity: "success",
+            summary: "Unload process",
+            detail: "Partial unload has selected",
+        });
+        this.partialClicked = true;
+        return true;
+    }
+
     get skuForm() {
         return this.unloadForm.get("sku") as FormArray;
+    }
+
+    get remForm() {
+        return this.unloadForm.get("remaining") as FormArray;
     }
 
     initReport() {
@@ -75,6 +93,8 @@ export class UnloadreportComponent implements OnInit {
             unloadStart: res.unloadStart,
             cheifUnload: res.cheifUnload,
         });
+
+        console.log(this.unloadForm.value);
     }
 
     addSku() {
@@ -87,30 +107,41 @@ export class UnloadreportComponent implements OnInit {
             partial: [0, Validators.required],
         });
         this.skuForm.push(items);
+        this.remForm.push(items);
     }
 
-    getActualUnload(
-        docQty: number,
-        damaged: number,
-        short: number,
-        extra: number,
-        partial: number
-    ) {
+    getActualUnload(i: number) {
+        let docQty = this.unloadForm.value.sku[i].qty;
+        let damaged = this.unloadForm.value.remaining[i].damaged;
+        let short = this.unloadForm.value.remaining[i].short;
+        let extra = this.unloadForm.value.remaining[i].extra;
+        let partial = this.unloadForm.value.remaining[i].partial;
+
         if (this.unloadForm.value.partialUnload == false) {
-            return docQty + extra - damaged - short;
+            return docQty + extra - short - damaged;
         } else {
-            return partial + extra - damaged - short;
+            return docQty - partial - damaged;
         }
     }
 
-    getRemaining(
-        docQty: number,
-        damaged: number,
-        short: number,
-        extra: number,
-        partial: number
-    ) {
-        return docQty - partial;
+    //     docQty: number,
+    // damaged: number,
+    // short: number,
+    // extra: number,
+    // partial: number
+
+    getRemaining(i: number) {
+        let docQty = this.unloadForm.value.remaining[i].qty;
+        let damaged = this.unloadForm.value.remaining[i].damaged;
+        let short = this.unloadForm.value.remaining[i].short;
+        let extra = this.unloadForm.value.remaining[i].extra;
+        let partial = this.unloadForm.value.remaining[i].partial;
+
+        if (this.unloadForm.value.partialUnload == false) {
+            return docQty + extra - short - damaged;
+        } else {
+            return docQty - partial - damaged;
+        }
     }
 
     partialUnload() {
@@ -151,18 +182,9 @@ export class UnloadreportComponent implements OnInit {
         //PARTIAL
         if (this.unloadForm.value.partialUnload == true) {
             let remArr = [];
-            this.unloadForm.value.sku.forEach((element) => {
+            this.unloadForm.value.remaining.forEach((element) => {
                 if (element.damaged != 0) {
                     this.handelDamage(element);
-                }
-
-                if (element.short != 0 && element.extra != 0) {
-                    if (element.short != 0) {
-                        this.handelShort(element);
-                    }
-                    if (element.extra != 0) {
-                        this.handelExtra(element);
-                    }
                 }
 
                 remArr.push({
@@ -176,12 +198,34 @@ export class UnloadreportComponent implements OnInit {
                 this.updateSOH(element.skuCode, element.partial);
                 this.partialUnloadReport();
             });
+
+            remArr.forEach((element) => {
+                if (element.qty == 0) {
+                    this.emptyCont = true;
+                } else {
+                    this.emptyCont = false;
+                }
+            });
+
+            if (this.emptyCont == true) {
+                this.afs.collection("exwh_lae").doc(this.docID).update({
+                    status: "empty",
+                    unloadfinished: this.timestamp,
+                });
+            }
+
             this.unloadForm.patchValue({ remaining: remArr, sku: remArr });
             this.afs
                 .collection("exwh_lae")
                 .doc(this.docID)
                 .update({ remaining: remArr });
         }
+        this.messageService.add({
+            severity: "success",
+            summary: "Unload report success",
+            detail: this.docID,
+        });
+        this.router.navigate(["/import/unload"]);
     }
 
     partialUnloadReport() {
@@ -191,6 +235,7 @@ export class UnloadreportComponent implements OnInit {
             containerNumber: this.docID,
             shipmenNumber: this.containerData.shipmentNumber,
             sku: this.unloadForm.value.sku,
+            remaining: this.unloadForm.value.remaining,
             date: this.timestamp,
         });
         this.afs
@@ -200,7 +245,10 @@ export class UnloadreportComponent implements OnInit {
         this.afs
             .collection("exwh_lae")
             .doc(this.docID)
-            .update({ status: "partial", sku: this.unloadForm.value.sku });
+            .update({
+                sku: this.unloadForm.value.sku,
+                remaining: this.unloadForm.value.remaining,
+            });
     }
 
     fulllUnloadReport() {
@@ -208,8 +256,9 @@ export class UnloadreportComponent implements OnInit {
             partialUnload: this.unloadForm.value.partialUnload,
             cheifUnload: this.user,
             containerNumber: this.docID,
-            shipmenNumber: this.containerData.shipmentNumber,
+            shipmentNumber: this.containerData.shipmentNumber,
             sku: this.unloadForm.value.sku,
+            remaining: this.unloadForm.value.remaining,
             date: this.timestamp,
         });
         this.afs
@@ -274,5 +323,5 @@ interface contData {
     sku: any[];
     status: string;
     unloadStart: any;
-    remaining: [];
+    remaining: any[];
 }

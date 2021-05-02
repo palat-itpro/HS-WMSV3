@@ -6,7 +6,7 @@ import { Component, OnInit } from "@angular/core";
 import * as moment from "moment";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ConfirmationService } from "primeng/api";
-import * as firebase from "firebase";
+import firebase from "firebase/app";
 import { PrimeNGConfig } from "primeng/api";
 import { Message } from "primeng/api";
 
@@ -48,7 +48,7 @@ export class ShipmenttableComponent implements OnInit {
     displayedColumns = ["SHIPMENT", "CONT"];
     subTableColumns = ["SKU", "QTY", "TON"];
 
-    timeStamp = firebase.default.firestore.FieldValue.serverTimestamp();
+    timeStamp = firebase.firestore.FieldValue.serverTimestamp();
 
     constructor(
         private afs: AngularFirestore,
@@ -75,7 +75,7 @@ export class ShipmenttableComponent implements OnInit {
     public getDft(discharge: any, agent: string) {
         // this.dftData[`${agent}`]
         let today = moment();
-        let disc = discharge.toMillis();
+        let disc = discharge;
         let agentDft = moment(disc)
             .add(this.dftData[`${agent}`], "days")
             .toString();
@@ -160,6 +160,7 @@ export class ShipmenttableComponent implements OnInit {
                         shipmentNumber: shipment,
                         containerNumber: v.containerNumber.replace(" ", ""),
                         sku: v.sku,
+                        remaining: v.sku,
                         discharge: discharge,
                         agent: agent,
                         status: "ready to unload",
