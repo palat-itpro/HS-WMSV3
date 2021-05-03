@@ -59,6 +59,32 @@ export class AppMenuComponent implements OnInit {
                 ],
             },
             {
+                label: "Stock control",
+                icon: "pi pi-fw pi-list",
+                routerLink: ["stockcontrol"],
+                badge: 0,
+                items: [
+                    {
+                        label: "Stock control section",
+                        icon: "pi pi-fw pi-table",
+                        routerLink: ["/stockcontrol/stockcontrol"],
+                    },
+                ],
+            },
+            {
+                label: "Logistics",
+                icon: "pi pi-fw pi-list",
+                routerLink: ["logistics"],
+                badge: 0,
+                items: [
+                    {
+                        label: "Logistics Department",
+                        icon: "pi pi-fw pi-table",
+                        routerLink: ["/logistics/logistics"],
+                    },
+                ],
+            },
+            {
                 label: "UI Kit",
                 icon: "pi pi-fw pi-star",
                 routerLink: ["/uikit"],

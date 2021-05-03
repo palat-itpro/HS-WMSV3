@@ -145,8 +145,10 @@ import { UnloadingComponent } from "./pages/import/unload/unloading/unloading.co
 import { UnloadreportComponent } from "./pages/import/unload/unloadreport/unloadreport.component";
 import { FormlyModule } from "@ngx-formly/core";
 import { from } from "rxjs";
-import { SohComponent } from './pages/soh/soh.component';
-import { SalesordersComponent } from './pages/sales/salesorders/salesorders.component';
+import { SohComponent } from "./pages/soh/soh.component";
+import { SalesordersComponent } from "./pages/sales/salesorders/salesorders.component";
+import { StockcontrolComponent } from './pages/stockcontrol/stockcontrol.component';
+import { LogisticsComponent } from './pages/logistics/logistics.component';
 
 @NgModule({
     imports: [
@@ -279,6 +281,8 @@ import { SalesordersComponent } from './pages/sales/salesorders/salesorders.comp
         UnloadreportComponent,
         SohComponent,
         SalesordersComponent,
+        StockcontrolComponent,
+        LogisticsComponent,
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },

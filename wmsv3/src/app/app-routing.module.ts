@@ -1,3 +1,5 @@
+import { LogisticsComponent } from "./pages/logistics/logistics.component";
+import { StockcontrolComponent } from "./pages/stockcontrol/stockcontrol.component";
 import { SalesordersComponent } from "./pages/sales/salesorders/salesorders.component";
 import { UnloadreportComponent } from "./pages/import/unload/unloadreport/unloadreport.component";
 import { UnloadComponent } from "./pages/import/unload/unload.component";
@@ -71,6 +73,14 @@ import { AppHelpComponent } from "./pages/app.help.component";
                         {
                             path: "sales/salesorders",
                             component: SalesordersComponent,
+                        },
+                        {
+                            path: "stockcontrol/stockcontrol",
+                            component: StockcontrolComponent,
+                        },
+                        {
+                            path: "logistics/logistics",
+                            component: LogisticsComponent,
                         },
                         //
                         {
