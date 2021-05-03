@@ -1,18 +1,83 @@
-<p-card>
-    <ng-template pTemplate="title">
-        Sales orders
-    </ng-template>
-    <ng-template pTemplate="header">
-        <button style="margin: 10px;" pButton type="button" label="+ Sales order"
-            class="p-button-rounded p-button-success"></button>
-    </ng-template>
+<div style="width:50%;height: 50%;">
+    <p-card>
+        <ng-template pTemplate="title">
+            Sales orders
+        </ng-template>
+        <ng-template pTemplate="header">
+            <button style="margin: 10px;" (click)="showDialog()" pButton type="button" label="+ Sales order"
+                class="p-button-rounded p-button-success"></button>
+        </ng-template>
 
 
-    <div>
-        Body Content
-    </div>
+        <div>
+            <p-dialog header="Create sales order" position="top" [(visible)]="displayAddSO" [style]="{width: 'auto'}">
+                <form [formGroup]="soForm" style="height: auto">
+                    <div class="p-grid p-fluid">
 
-    <ng-template pTemplate="footer">
-        Footer content here
-    </ng-template>
-</p-card>
+                        <div class="p-col-12 p-md-4">
+                            <div class="p-inputgroup">
+                                <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+                                <p-dropdown [style]="{width:'250px'}" formControlName="customer"
+                                    [options]="customerList" itemSize="150" [showTransitionOptions]="'0ms'"
+                                    [hideTransitionOptions]="'0ms'" [(ngModel)]="selectedCustomer" optionLabel="name"
+                                    optionDisabled="inactive">
+                                </p-dropdown>
+                            </div>
+                        </div>
+
+                        <div class="p-col-12 p-md-4">
+                            <div class="p-inputgroup">
+                                <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+                                <input formControlName="so_number" type="text" pInputText placeholder="so_number">
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="p-grid p-fluid">
+                        <div class="p-col-12 p-md-4">
+                            <div class="p-inputgroup">
+                                <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+                                <p-dropdown formControlName="transportOption" [options]="transportChoices"
+                                    [(ngModel)]="selectedTransport" optionLabel="name" optionDisabled="inactive">
+                                </p-dropdown>
+                            </div>
+                        </div>
+
+                        <div class="p-col-12 p-md-4">
+                            <div class="p-inputgroup">
+                                <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+                                <input formControlName="ddNumber" type="text" pInputText placeholder="DD">
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-md-4">
+                            <div class="p-inputgroup">
+                                <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+                                <input formControlName="invNumber" type="text" pInputText placeholder="INV">
+                            </div>
+                        </div>
+                        <div formArrayName="sku">
+                            <div *ngFor="let item of skuForm.controls;let i=index" [formGroupName]="i">
+                                <div class="p-col-12 p-md-4">
+                                    <div class="p-inputgroup">
+                                        <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+                                        <p-dropdown formControlName="skuCode" [options]="skuChoices" optionLabel="name"
+                                            optionDisabled="inactive">
+                                        </p-dropdown>
+                                        <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+                                        <input formControlName="qty" type="text" pInputText placeholder="QTY">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- {{soForm.value | json}} -->
+                </form>
+            </p-dialog>
+            Body Content
+        </div>
+
+        <ng-template pTemplate="footer">
+            Footer content here
+        </ng-template>
+    </p-card>
+</div>
