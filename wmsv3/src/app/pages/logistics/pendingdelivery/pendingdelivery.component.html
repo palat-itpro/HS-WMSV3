@@ -1,0 +1,32 @@
+<p-table [value]="pendingDeliv">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>DATE (ST confirmed)</th>
+            <th>CUSTOMER</th>
+            <th>DD</th>
+            <th>INV</th>
+            <th>SO</th>
+            <th>SKU</th>
+            <th>DELIVERY METHOD</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-v>
+        <tr>
+            <td>{{v.stockConfTime.toMillis() | date: 'dd/MMM/YYYY HH:mm a'}}</td>
+            <td>{{v.customer.name}}</td>
+            <td>{{v.ddNumber}}</td>
+            <td>{{v.invNumber}}</td>
+            <td>{{v.so_number}}</td>
+            <td>
+                <div *ngFor="let item of v.sku">
+                    <p-button [label]="item.qty" styleClass="p-button-info p-button-text">
+                    </p-button>
+                    <hr>
+                </div>
+            </td>
+            <td>
+                {{v.transportOption.name}}
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

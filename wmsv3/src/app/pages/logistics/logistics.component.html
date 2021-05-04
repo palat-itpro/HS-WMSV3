@@ -1,1 +1,18 @@
-<p>logistics works!</p>
+<p-tabView>
+    <p-tabPanel>
+        <ng-template pTemplate="header"><i class="fas fa-clipboard-list"></i> &nbsp; Pending delivery</ng-template>
+        <app-pendingdelivery></app-pendingdelivery>
+    </p-tabPanel>
+    <p-tabPanel>
+        <ng-template pTemplate="header"><i class="fas fa-truck-moving"></i> &nbsp; Fleets and Driver</ng-template>
+        <app-fleets></app-fleets>
+    </p-tabPanel>
+    <p-tabPanel>
+        <ng-template pTemplate="header"><i class="fas fa-folder-open"></i> &nbsp; Empty container</ng-template>
+        <app-emptycontainer></app-emptycontainer>
+    </p-tabPanel>
+    <p-tabPanel>
+        <ng-template pTemplate="header"><i class="fas fa-pallet"></i> &nbsp; Pallet pickup</ng-template>
+        <app-palletpickup></app-palletpickup>
+    </p-tabPanel>
+</p-tabView>

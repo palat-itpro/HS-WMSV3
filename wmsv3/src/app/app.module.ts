@@ -149,6 +149,10 @@ import { SohComponent } from "./pages/soh/soh.component";
 import { SalesordersComponent } from "./pages/sales/salesorders/salesorders.component";
 import { StockcontrolComponent } from './pages/stockcontrol/stockcontrol.component';
 import { LogisticsComponent } from './pages/logistics/logistics.component';
+import { PendingdeliveryComponent } from './pages/logistics/pendingdelivery/pendingdelivery.component';
+import { FleetsComponent } from './pages/logistics/fleets/fleets.component';
+import { EmptycontainerComponent } from './pages/logistics/emptycontainer/emptycontainer.component';
+import { PalletpickupComponent } from './pages/logistics/palletpickup/palletpickup.component';
 
 @NgModule({
     imports: [
@@ -283,6 +287,10 @@ import { LogisticsComponent } from './pages/logistics/logistics.component';
         SalesordersComponent,
         StockcontrolComponent,
         LogisticsComponent,
+        PendingdeliveryComponent,
+        FleetsComponent,
+        EmptycontainerComponent,
+        PalletpickupComponent,
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
@@ -297,4 +305,4 @@ import { LogisticsComponent } from './pages/logistics/logistics.component';
     ],
     bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
