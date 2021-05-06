@@ -32,7 +32,8 @@
                         <div class="p-field p-col-12 p-md-8">
 
                             <p-fieldset [legend]="unloadForm.value.sku[i].skuCode">
-                                <p>Remaining Quantity : {{unloadForm.value.remaining[i].qty}}</p>
+                                <p>Remaining Quantity : {{unloadForm.value.remaining[i].qty -
+                                    unloadForm.value.remaining[i].partial}}</p>
                                 <br>
                                 <span class="p-float-label">
                                     <input class="textinput" disabled id="skuCode" formControlName="skuCode" pInputText>
@@ -92,13 +93,12 @@
                                             <h6 *ngIf="unloadForm.value.partialUnload == false"
                                                 style="color: rgb(18, 82, 160);">
                                                 QTY : &nbsp;
-                                                {{getActualUnload(i)}}
+                                                {{unloadForm.value.remaining[i].qty}}
                                             </h6>
                                             <h6 *ngIf="unloadForm.value.partialUnload == true"
                                                 style="color: rgb(18, 82, 160);">
-                                                REMAINING : &nbsp;
-                                                {{
-                                                getRemaining(i)}}
+                                                QTY : &nbsp;
+                                                {{unloadForm.value.remaining[i].partial}}
                                             </h6>
                                         </p-panel>
 
